@@ -4,8 +4,19 @@ const authorText = document.getElementById('author');
 const twitterBtn = document.getElementById('twitter');
 const newQuoteBtn = document.getElementById('new-quote');
 const loader = document.getElementById('loader');
+const authorButton = document.getElementById('author-button');
 
 let apiQuotes = [];
+
+// Console Log All of the current author Quote
+function logAllQuotesOfCurrentAuthor(){
+    let author = authorText.textContent;
+    apiQuotes.forEach(quote => {
+        if (quote.author === author ){
+            console.log(quote);
+        }
+    })
+}
 
 // Show Loading
 function showLoadingSpinner(){
@@ -26,25 +37,29 @@ function newQuote() {
     let index = Math.floor(random);
     const quote = apiQuotes[index];
     // Check if author field is blank and replace it with 'Unknown'
-    if (quote.author) {
+    console.log(quote.author)
+    if (quote.author !== 'Anonymous') {
+        authorButton.hidden = false;
         quoteText.textContent = quote.text;
+        authorText.textContent = quote.author;
     } else {
-        quoteText.textContent = 'Unknown';
+        authorButton.hidden = true;
+        quoteText.textContent = quote.text;
+        authorText.textContent = 'Unknown'
     }
     // Check Quote length to determine styling
-    console.log(quote.text.length)
     if (quote.text.length > 50) {
         quoteText.classList.add('long-quote');
     } else {
         quoteText.classList.remove('long-quote');
     }
-    authorText.textContent = quote.author;
     removeLoadingSpinner();
 }
 
 // Get Quotes From API
 async function getQuotes() {
     const apiUrl = 'https://jacintodesign.github.io/quotes-api/data/quotes.json';
+    authorButton.hidden = true;
     try {
         const response = await fetch(apiUrl);
         apiQuotes = await response.json();
@@ -63,5 +78,6 @@ function tweetQuote() {
 // event Listners
 newQuoteBtn.addEventListener('click', newQuote);
 twitterBtn.addEventListener('click', tweetQuote);
+authorButton.addEventListener('click', logAllQuotesOfCurrentAuthor)
 
 getQuotes();
