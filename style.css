@@ -51,7 +51,7 @@ body {
 
 .button-container {
     margin-top: 15px;
-    display: flex;
+    display: inline-block;
     justify-content: space-between;
 }
 
@@ -64,7 +64,7 @@ button {
     color: #fff;
     background: #333;
     outline: none;
-    padding: 0.5rem 0.1rem;
+    padding: 0.5rem 0.5rem;
     box-shadow: 0 0.3rem rgba(121,121,121,0.65);
     width: fit-content;
 }
@@ -119,9 +119,5 @@ button:active{
 
   .qoute-text {
     font-size: 2.5rem;
-  }
-
-  button{
-    padding: 0;
   }
 }
