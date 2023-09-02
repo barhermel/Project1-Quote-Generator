@@ -44,9 +44,9 @@ function whatsappQuote() {
     // Remove all the commas from the PhoneNumberStr
     phoneNumberStr = phoneNumberArr.toString().replaceAll(',','');
     const quote = quoteText.textContent;
-    console.log(phoneNumberStr)
     // Send the text
-    window.open(`https://wa.me/${phoneNumberStr}?text=${quote}`)
+    const whatsappLink = `https://wa.me/${phoneNumberStr}?text=${quote}`;
+    window.open(whatsappLink, '_blank')
 }
 
 // Show Loading
@@ -68,7 +68,6 @@ function newQuote() {
     let index = Math.floor(random);
     const quote = apiQuotes[index];
     // Check if author field is blank and replace it with 'Unknown'
-    console.log(quote.author)
     if (quote.author !== 'Anonymous') {
         authorButton.hidden = false;
         quoteText.textContent = quote.text;
