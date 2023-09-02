@@ -66,6 +66,7 @@ button {
     outline: none;
     padding: 0.5rem 1.8rem;
     box-shadow: 0 0.3rem rgba(121,121,121,0.65);
+    width: fit-content;
 }
 
 button:hover{
@@ -111,12 +112,16 @@ button:active{
 
 /* Media Query: Tablet or Smaller */
 
-@media only screen and (max-width: 1000px) {
+@media only screen and (max-width: 600px) {
   .quote-container {
     margin: auto 10px;
   }
 
   .qoute-text {
     font-size: 2.5rem;
+  }
+
+  button{
+    padding: 0;
   }
 }
