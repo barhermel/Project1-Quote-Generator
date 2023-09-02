@@ -28,21 +28,20 @@ function whatsappQuote() {
     if (! /^\d+$/.test(phoneNumberStr)) {
         throw "Must contain only numbers";
     }
-    let phoneNumberArr = phoneNumberStr.split('');
-    if (phoneNumberArr[0] === '0') {
+    if (phoneNumberStr[0] === '0') {
         // Removing the 0 and adding 972
-        phoneNumberArr.unshift();
-        phoneNumberArr.shift(['9','7','2']);
-    } else if (phoneNumberArr[0] === '5') {
+        phoneNumberStr = phoneNumberStr.slice(1);
+        phoneNumberStr = '972' + phoneNumberStr;
+    } else if (phoneNumberStr[0] === '5') {
         // Adding 972
-        phoneNumberArr.shift(['9','7','2']);
+        phoneNumberStr = '972' + phoneNumberStr;
     }
     // Validating the correct Israel perpendix 
-    else if (!phoneNumberArr.slice(0,3) === ['9','7','2']){
-        throw 'The number must start with 0 or 5 or 972';
+    else if (phoneNumberStr.substring(0, 3) !== '972') {
+        throw 'Not a Valid Israel Celuler Phone Number!'
     }
+
     // Remove all the commas from the PhoneNumberStr
-    phoneNumberStr = phoneNumberArr.toString().replaceAll(',','');
     const quote = quoteText.textContent;
     // Send the text
     const whatsappLink = `https://wa.me/${phoneNumberStr}?text=${quote}`;
