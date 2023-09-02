@@ -5,21 +5,52 @@ const twitterBtn = document.getElementById('twitter');
 const newQuoteBtn = document.getElementById('new-quote');
 const loader = document.getElementById('loader');
 const authorButton = document.getElementById('author-button');
+const whatsappButton = document.getElementById('whatsapp');
 
 let apiQuotes = [];
 
 // Console Log All of the current author Quote
-function logAllQuotesOfCurrentAuthor(){
-    let author = authorText.textContent;
+function logAllQuotesOfCurrentAuthor() {
+    let author = quoteText.textContent;
     apiQuotes.forEach(quote => {
-        if (quote.author === author ){
+        if (quote.author === author) {
             console.log(quote);
         }
     })
 }
 
+// Send whatsApp message with the current Quote
+function whatsappQuote() {
+    alert('Here We Will Take The Number To Forward This Inspirational Quote To!');
+    alert('This Will Only Work On Israel');
+    let phoneNumberStr = prompt('Enter The Phone Number: ');
+    // Check If contains only numbers
+    if (! /^\d+$/.test(phoneNumberStr)) {
+        throw "Must contain only numbers";
+    }
+    let phoneNumberArr = phoneNumberStr.split('');
+    if (phoneNumberArr[0] === '0') {
+        // Removing the 0 and adding 972
+        phoneNumberArr.unshift();
+        phoneNumberArr.shift(['9','7','2']);
+    } else if (phoneNumberArr[0] === '5') {
+        // Adding 972
+        phoneNumberArr.shift(['9','7','2']);
+    }
+    // Validating the correct Israel perpendix 
+    else if (!phoneNumberArr.slice(0,3) === ['9','7','2']){
+        throw 'The number must start with 0 or 5 or 972';
+    }
+    // Remove all the commas from the PhoneNumberStr
+    phoneNumberStr = phoneNumberArr.toString().replaceAll(',','');
+    const quote = quoteText.textContent;
+    console.log(phoneNumberStr)
+    // Send the text
+    window.open(`https://wa.me/${phoneNumberStr}?text=${quote}`)
+}
+
 // Show Loading
-function showLoadingSpinner(){
+function showLoadingSpinner() {
     loader.hidden = false;
     quoteContainer.hidden = true;
 }
@@ -72,12 +103,13 @@ async function getQuotes() {
 // Tweet Quote
 function tweetQuote() {
     const twitterUrl = `https://twitter.com/intent/tweet?text=${quoteText.textContent} - ${authorText.text}`;
-    window.open(twitterUrl,'_blank');
+    window.open(twitterUrl, '_blank');
 }
 
 // event Listners
 newQuoteBtn.addEventListener('click', newQuote);
 twitterBtn.addEventListener('click', tweetQuote);
-authorButton.addEventListener('click', logAllQuotesOfCurrentAuthor)
+authorButton.addEventListener('click', logAllQuotesOfCurrentAuthor);
+whatsappButton.addEventListener('click', whatsappQuote)
 
 getQuotes();
